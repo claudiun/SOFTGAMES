@@ -32,26 +32,3 @@ export class FpsCounter {
     this.text.remove();
   }
 }
-
-export class FullscreenButton {
-  private btn: HTMLButtonElement;
-  constructor() {
-    this.btn = document.createElement("button");
-    this.btn.textContent = "Fullscreen";
-    this.btn.style.position = "fixed";
-    this.btn.style.top = "8px";
-    this.btn.style.right = "8px";
-    this.btn.style.zIndex = "100";
-    document.body.appendChild(this.btn);
-    this.btn.onclick = () => {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen();
-      } else {
-        document.exitFullscreen();
-      }
-    };
-  }
-  destroy() {
-    this.btn.remove();
-  }
-}

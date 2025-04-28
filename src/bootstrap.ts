@@ -1,10 +1,12 @@
 import * as PIXI from "pixi.js";
 
-import { Menu } from "./menu";
-import { showAceOfShadows } from "./tasks/aceofshadow";
-import { showMagicWords } from "./tasks/magicwords";
-import { showPhoenixFlame } from "./tasks/phoenixflame";
-import { FpsCounter, FullscreenButton } from "./utils/ui";
+import { AceOfShadows } from "./scenes/AceOfShadows";
+import { MagicWords } from "./scenes/MagicWords";
+import { PhoenixFlame } from "./scenes/PhoenixFlame";
+import { FpsCounter } from "./ui/FpsCounter";
+import { FullscreenButton } from "./ui/FullscreenButton";
+import { Menu } from "./ui/Menu";
+import { EVENTS } from "./comm/events";
 
 const app = new PIXI.Application({
   resizeTo: window,
@@ -13,52 +15,41 @@ const app = new PIXI.Application({
 document.body.appendChild(app.view as HTMLCanvasElement);
 
 let currentScene: PIXI.DisplayObject | null = null;
-let menu: Menu | null = null;
+let menu: Menu;
 const fpsCounter = new FpsCounter();
 const fullscreenBtn = new FullscreenButton();
 
 function clearScene() {
   if (currentScene) {
     app.stage.removeChild(currentScene);
-    if (
-      "destroy" in currentScene &&
-      typeof (currentScene as any).destroy === "function"
-    ) {
-      (currentScene as any).destroy();
-    }
-    currentScene = null;
+  }
+  if (menu) {
+    app.stage.removeChild(menu);
   }
 }
 
 function showMenu() {
-  clearScene();
-  if (menu) menu.destroy();
-  menu = new Menu((task) => {
-    if (menu) menu.destroy();
+  menu = new Menu(app, (task: string) => {
+    if (menu) {
+      app.stage.removeChild(menu);
+    }
     if (task === "aceofshadow") {
       clearScene();
-      currentScene = showAceOfShadows(app);
+      currentScene = AceOfShadows(app);
     } else if (task === "magicwords") {
       clearScene();
-      currentScene = showMagicWords(app);
+      // currentScene = MagicWords(app);
     } else if (task === "phoenixflame") {
       clearScene();
-      currentScene = showPhoenixFlame(app);
+      currentScene = PhoenixFlame(app);
     }
-    // Add a back button
-    const backBtn = document.createElement("button");
-    backBtn.textContent = "Back to Menu";
-    backBtn.style.position = "fixed";
-    backBtn.style.bottom = "16px";
-    backBtn.style.left = "50%";
-    backBtn.style.transform = "translateX(-50%)";
-    backBtn.style.zIndex = "100";
-    backBtn.onclick = () => {
-      backBtn.remove();
-      showMenu();
-    };
-    document.body.appendChild(backBtn);
+    if (currentScene) {
+      currentScene.on(EVENTS.BACK_TO_MENU, () => {
+        showMenu();
+      });
+    }
   });
+  app.stage.addChild(menu);
 }
 
 window.addEventListener("resize", () => {
