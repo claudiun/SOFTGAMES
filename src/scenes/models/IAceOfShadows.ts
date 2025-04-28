@@ -8,3 +8,12 @@ export interface IAnimateTo {
   duration?: number;
   onComplete?: () => void;
 }
+
+export interface ICard {
+  id: number;
+  width?: number;
+  height?: number;
+  x?: number;
+  y?: number;
+  zIndex?: number;
+}

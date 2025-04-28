@@ -38,7 +38,7 @@ function showMenu() {
       currentScene = AceOfShadows(app);
     } else if (task === "magicwords") {
       clearScene();
-      // currentScene = MagicWords(app);
+      currentScene = MagicWords(app);
     } else if (task === "phoenixflame") {
       clearScene();
       currentScene = PhoenixFlame(app);

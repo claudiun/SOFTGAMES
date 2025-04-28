@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
-import { ICard } from "../models/ICard";
-import { IAnimateTo } from "../models/IAnimateTo";
+import { ICard } from "../models/IAceOfShadows";
+import { IAnimateTo } from "../models/IAceOfShadows";
 
 export class Card extends PIXI.Container {
   id: number;
