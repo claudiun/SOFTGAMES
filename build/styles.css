@@ -25,33 +25,3 @@ canvas {
   padding: 2px 8px;
   z-index: 100;
 }
-
-.ibutton {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  outline: none;
-}
-
-.button {
-  display: inline-block;
-  padding: 8px 20px;
-  font-size: 16px;
-  font-family: inherit;
-  color: #fff;
-  background: #222;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.button:hover,
-.button:focus {
-  background: #444;
-}
