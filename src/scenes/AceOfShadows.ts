@@ -1,9 +1,8 @@
 import * as PIXI from "pixi.js";
 import { Card } from "./components/Card";
-import { Button } from "../ui/Button";
 import { EVENTS } from "../comm/events";
+import { BaseScene } from "./BaseScene";
 
-// --- Constants ---
 const CARD_COUNT = 144;
 const CARD_WIDTH = 60;
 const CARD_HEIGHT = 90;
@@ -12,26 +11,17 @@ const STACK_GAP = 180;
 
 type StackPosition = { x: number; y: number };
 
-export function AceOfShadows(app: PIXI.Application): PIXI.Container {
-  removePreviousChildren(app);
-  const sceneContainer = createSceneContainer(app);
-  const { stacks, stackPositions } = setupStacksAndPositions(app);
-  createCards(stacks, stackPositions, sceneContainer, app);
-  sceneContainer.sortChildren();
-  startAnimationLoop(app, stacks, stackPositions, sceneContainer);
-  addBackButton(app, sceneContainer);
-  return sceneContainer;
-}
+export class AceOfShadows extends BaseScene {
+  protected app: PIXI.Application;
 
-function removePreviousChildren(app: PIXI.Application) {
-  app.stage.removeChildren();
-}
-
-function createSceneContainer(app: PIXI.Application): PIXI.Container {
-  const sceneContainer = new PIXI.Container();
-  sceneContainer.sortableChildren = true;
-  app.stage.addChild(sceneContainer);
-  return sceneContainer;
+  constructor(app: PIXI.Application) {
+    super(app);
+    this.app = app;
+    const { stacks, stackPositions } = setupStacksAndPositions(app);
+    createCards(stacks, stackPositions, this, app);
+    this.sortChildren();
+    startAnimationLoop(app, stacks, stackPositions, this);
+  }
 }
 
 function setupStacksAndPositions(app: PIXI.Application): {
@@ -114,18 +104,4 @@ function startAnimationLoop(
       });
     }
   }, 1000);
-}
-
-function addBackButton(app: PIXI.Application, sceneContainer: PIXI.Container) {
-  const backBtn = new Button({
-    label: "Back to Menu",
-    onClick: () => {
-      app.stage.removeChildren();
-      sceneContainer.emit(EVENTS.BACK_TO_MENU);
-    },
-  });
-  backBtn.x = 16;
-  backBtn.y = 16;
-  backBtn.zIndex = 1000;
-  sceneContainer.addChild(backBtn);
 }

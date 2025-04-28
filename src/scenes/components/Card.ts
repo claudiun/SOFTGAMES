@@ -1,6 +1,7 @@
 import * as PIXI from "pixi.js";
 import { ICard } from "../models/IAceOfShadows";
 import { IAnimateTo } from "../models/IAceOfShadows";
+import { ASSETS } from "../../comm/consts";
 
 export class Card extends PIXI.Sprite {
   id: number;
@@ -16,7 +17,7 @@ export class Card extends PIXI.Sprite {
     text = String(id),
   }: ICard) {
     // Use the card image as the texture
-    const texture = PIXI.Texture.from("assets/card.png");
+    const texture = PIXI.Texture.from(ASSETS.CARD);
     super(texture);
 
     this.id = id;

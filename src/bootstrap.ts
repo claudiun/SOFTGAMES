@@ -35,13 +35,13 @@ function showMenu() {
     }
     if (task === "aceofshadow") {
       clearScene();
-      currentScene = AceOfShadows(app);
+      currentScene = new AceOfShadows(app);
     } else if (task === "magicwords") {
       clearScene();
-      currentScene = MagicWords(app);
+      currentScene = new MagicWords(app);
     } else if (task === "phoenixflame") {
       clearScene();
-      currentScene = PhoenixFlame(app);
+      currentScene = new PhoenixFlame(app);
     }
     if (currentScene) {
       currentScene.on(EVENTS.BACK_TO_MENU, () => {

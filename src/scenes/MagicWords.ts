@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+import { BaseScene } from "./BaseScene";
 import { Button } from "../ui/Button";
 import { EVENTS } from "../comm/events";
 import { DialogueLine } from "./components/DialogueLine";
@@ -16,47 +17,27 @@ const FONT_STYLE = {
 };
 const VERTICAL_PADDING = 80; // Used for both top and bottom
 
-export function MagicWords(app: PIXI.Application): PIXI.Container {
-  clearStage(app);
-  const sceneContainer = createSceneContainer(app);
-  const loadingText = showLoading(sceneContainer, app);
-  addBackButton(sceneContainer, app);
-  const { scrollContainer, maskY, maskHeight } = createScrollContainer(
-    sceneContainer,
-    app
-  );
-  let contentHeight = 0; // Will be set after dialogue is rendered
-  fetchAndRenderDialogue(
-    app,
-    sceneContainer,
-    scrollContainer,
-    loadingText,
-    maskY,
-    maskHeight,
-    (ch: number) => {
-      contentHeight = ch;
-      setupScrolling(app, scrollContainer, maskY, maskHeight, contentHeight);
-      setupTouchScrolling(
-        app,
-        scrollContainer,
-        maskY,
-        maskHeight,
-        () => contentHeight
-      );
-    }
-  );
-  return sceneContainer;
-}
-
-function clearStage(app: PIXI.Application) {
-  app.stage.removeChildren();
-}
-
-function createSceneContainer(app: PIXI.Application) {
-  const container = new PIXI.Container();
-  container.sortableChildren = true;
-  app.stage.addChild(container);
-  return container;
+export class MagicWords extends BaseScene {
+  constructor(app: PIXI.Application) {
+    super(app);
+    const loadingText = showLoading(this, app);
+    const { scrollContainer, maskY, maskHeight } = createScrollContainer(
+      this,
+      app
+    );
+    fetchAndRenderDialogue(
+      app,
+      this,
+      scrollContainer,
+      loadingText,
+      maskY,
+      maskHeight,
+      (ch: number) => {
+        setupScrolling(app, scrollContainer, maskY, maskHeight, ch);
+        setupTouchScrolling(app, scrollContainer, maskY, maskHeight, () => ch);
+      }
+    );
+  }
 }
 
 function showLoading(sceneContainer: PIXI.Container, app: PIXI.Application) {
@@ -71,21 +52,6 @@ function showLoading(sceneContainer: PIXI.Container, app: PIXI.Application) {
   loadingText.y = app.screen.height / 2;
   sceneContainer.addChild(loadingText);
   return loadingText;
-}
-
-function addBackButton(sceneContainer: PIXI.Container, app: PIXI.Application) {
-  const backBtn = new Button({
-    label: "Back to Menu",
-    onClick: () => {
-      app.stage.removeChildren();
-      sceneContainer.emit(EVENTS.BACK_TO_MENU);
-    },
-  });
-  backBtn.x = 16;
-  backBtn.y = 16;
-  backBtn.zIndex = 1000;
-  sceneContainer.addChild(backBtn);
-  return backBtn;
 }
 
 function createScrollContainer(
