@@ -25,6 +25,7 @@ export function MagicWords(app: PIXI.Application): PIXI.Container {
     sceneContainer,
     app
   );
+  let contentHeight = 0; // Will be set after dialogue is rendered
   fetchAndRenderDialogue(
     app,
     sceneContainer,
@@ -32,8 +33,16 @@ export function MagicWords(app: PIXI.Application): PIXI.Container {
     loadingText,
     maskY,
     maskHeight,
-    (contentHeight: number) => {
+    (ch: number) => {
+      contentHeight = ch;
       setupScrolling(app, scrollContainer, maskY, maskHeight, contentHeight);
+      setupTouchScrolling(
+        app,
+        scrollContainer,
+        maskY,
+        maskHeight,
+        () => contentHeight
+      );
     }
   );
   return sceneContainer;
@@ -108,31 +117,6 @@ function setupScrolling(
     scrollContainer.y -= event.deltaY;
     clampScroll(scrollContainer, maskY, maskHeight, contentHeight);
   });
-  let dragging = false;
-  let lastY = 0;
-  scrollContainer.eventMode = "static";
-  scrollContainer.on("pointerdown", (event: PIXI.FederatedPointerEvent) => {
-    dragging = true;
-    lastY = event.global.y;
-    scrollContainer.cursor = "grabbing";
-  });
-  app.stage.on("pointerup", () => {
-    dragging = false;
-    scrollContainer.cursor = "grab";
-  });
-  app.stage.on("pointerupoutside", () => {
-    dragging = false;
-    scrollContainer.cursor = "grab";
-  });
-  app.stage.on("pointermove", (event: PIXI.FederatedPointerEvent) => {
-    if (dragging) {
-      const newY = event.global.y;
-      const delta = newY - lastY;
-      scrollContainer.y += delta;
-      lastY = newY;
-      clampScroll(scrollContainer, maskY, maskHeight, contentHeight);
-    }
-  });
 }
 
 function clampScroll(
@@ -182,4 +166,49 @@ function fetchAndRenderDialogue(
       onContentReady(contentHeight);
     }, 0);
   });
+}
+
+function setupTouchScrolling(
+  app: PIXI.Application,
+  scrollContainer: PIXI.Container,
+  maskY: number,
+  maskHeight: number,
+  getContentHeight: () => number
+) {
+  const canvas = app.view as HTMLCanvasElement;
+  let touchDragging = false;
+  let lastTouchY = 0;
+  canvas.addEventListener(
+    "touchstart",
+    (e) => {
+      if (e.touches.length === 1) {
+        touchDragging = true;
+        lastTouchY = e.touches[0].clientY;
+      }
+      e.preventDefault();
+    },
+    { passive: false }
+  );
+  canvas.addEventListener(
+    "touchmove",
+    (e) => {
+      if (touchDragging && e.touches.length === 1) {
+        const newY = e.touches[0].clientY;
+        const delta = newY - lastTouchY;
+        scrollContainer.y += delta;
+        lastTouchY = newY;
+        clampScroll(scrollContainer, maskY, maskHeight, getContentHeight());
+      }
+      e.preventDefault();
+    },
+    { passive: false }
+  );
+  canvas.addEventListener(
+    "touchend",
+    (e) => {
+      touchDragging = false;
+      e.preventDefault();
+    },
+    { passive: false }
+  );
 }
