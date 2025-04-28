@@ -1,18 +1,18 @@
-export type AvatarData = {
+export interface AvatarData {
   name: string;
   url: string;
   position: "left" | "right";
-};
+}
 
-export type EmojiData = {
+export interface EmojiData {
   name: string;
   url: string;
-};
+}
 
-export type DialogueLineData = {
+export interface DialogueLineData {
   name: string;
   text: string;
-};
+}
 
 export interface MagicWordsResponse {
   dialogue: DialogueLineData[];

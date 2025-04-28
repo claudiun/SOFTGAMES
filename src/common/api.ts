@@ -1,5 +1,5 @@
-import { MagicWordsResponse } from "../scenes/models/IMagicWords";
-import { MAGICWORDS_URL } from "./consts";
+import { MagicWordsResponse } from "../scenes/interfaces/IMagicWords";
+import { MAGICWORDS_URL } from "./constants";
 
 export function fetchMagicWords(callback: (data: MagicWordsResponse) => void) {
   fetch(MAGICWORDS_URL)

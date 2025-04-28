@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
-import { BaseScene } from "./BaseScene";
+import { BaseScene } from "../core/BaseScene";
 import { Emitter } from "@pixi/particle-emitter";
-import { FLAME_EMMITTER_CONFIG } from "../comm/config";
+import { FLAME_EMMITTER_CONFIG } from "../common/config";
 
 export class PhoenixFlame extends BaseScene {
   private emitter: Emitter;

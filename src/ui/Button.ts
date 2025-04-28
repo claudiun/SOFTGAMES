@@ -1,13 +1,13 @@
 import * as PIXI from "pixi.js";
-import { IButton } from "./models/IButton";
+import { IButton } from "./interfaces/IButton";
 
 export class Button extends PIXI.Container {
   constructor({
     label,
-    width = 180,
-    height = 50,
+    width = 150,
+    height = 30,
     onClick,
-    fontSize = 22,
+    fontSize = 20,
     backgroundColor = 0x444444,
     radius = 10,
     textColor = 0xffffff,

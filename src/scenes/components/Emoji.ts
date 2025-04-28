@@ -1,6 +1,6 @@
 // src/components/emoji.ts
 import * as PIXI from "pixi.js";
-import { EmojiData } from "../models/IMagicWords";
+import { EmojiData } from "../interfaces/IMagicWords";
 
 export class Emoji {
   static emojiMap: Record<string, string> = {};

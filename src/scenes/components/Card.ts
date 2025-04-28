@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
-import { ICard } from "../models/IAceOfShadows";
-import { IAnimateTo } from "../models/IAceOfShadows";
-import { ASSETS } from "../../comm/consts";
+import { ICard } from "../interfaces/IAceOfShadows";
+import { IAnimateTo } from "../interfaces/IAceOfShadows";
+import { ASSETS } from "../../common/constants";
 
 export class Card extends PIXI.Sprite {
   id: number;

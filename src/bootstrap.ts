@@ -4,9 +4,8 @@ import { AceOfShadows } from "./scenes/AceOfShadows";
 import { MagicWords } from "./scenes/MagicWords";
 import { PhoenixFlame } from "./scenes/PhoenixFlame";
 import { FpsCounter } from "./ui/FpsCounter";
-import { FullscreenButton } from "./ui/FullscreenButton";
 import { Menu } from "./ui/Menu";
-import { EVENTS } from "./comm/events";
+import { EVENTS } from "./common/events";
 
 const app = new PIXI.Application({
   resizeTo: window,
@@ -16,8 +15,7 @@ document.body.appendChild(app.view as HTMLCanvasElement);
 
 let currentScene: PIXI.DisplayObject | null = null;
 let menu: Menu;
-const fpsCounter = new FpsCounter();
-const fullscreenBtn = new FullscreenButton();
+const fpsCounter = new FpsCounter(app);
 
 function clearScene() {
   if (currentScene) {
@@ -26,6 +24,7 @@ function clearScene() {
   if (menu) {
     app.stage.removeChild(menu);
   }
+  app.stage.addChild(fpsCounter);
 }
 
 function showMenu() {
@@ -47,9 +46,11 @@ function showMenu() {
       currentScene.on(EVENTS.BACK_TO_MENU, () => {
         showMenu();
       });
+      app.stage.addChild(fpsCounter);
     }
   });
   app.stage.addChild(menu);
+  app.stage.addChild(fpsCounter);
 }
 
 window.addEventListener("resize", () => {

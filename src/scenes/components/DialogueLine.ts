@@ -1,8 +1,8 @@
 import * as PIXI from "pixi.js";
 import { Avatar } from "./Avatar";
 import { Emoji } from "./Emoji";
-import { DialogueLineData } from "../models/IMagicWords";
-import { measureSpaceWidth } from "../../comm/utils";
+import { DialogueLineData } from "../interfaces/IMagicWords";
+import { measureSpaceWidth } from "../../common/utils";
 
 const PADDING = 16;
 

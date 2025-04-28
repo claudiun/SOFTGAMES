@@ -1,7 +1,6 @@
 import * as PIXI from "pixi.js";
 import { Card } from "./components/Card";
-import { EVENTS } from "../comm/events";
-import { BaseScene } from "./BaseScene";
+import { BaseScene } from "../core/BaseScene";
 
 const CARD_COUNT = 144;
 const CARD_WIDTH = 60;

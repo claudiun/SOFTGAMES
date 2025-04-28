@@ -1,12 +1,10 @@
 import * as PIXI from "pixi.js";
-import { BaseScene } from "./BaseScene";
-import { Button } from "../ui/Button";
-import { EVENTS } from "../comm/events";
+import { BaseScene } from "../core/BaseScene";
 import { DialogueLine } from "./components/DialogueLine";
-import { MagicWordsResponse } from "./models/IMagicWords";
+import { MagicWordsResponse } from "./interfaces/IMagicWords";
 import { Emoji } from "./components/Emoji";
 import { Avatar } from "./components/Avatar";
-import { fetchMagicWords } from "../comm/api";
+import { fetchMagicWords } from "../common/api";
 
 const FONT_SIZE = 12;
 const FONT_STYLE = {
@@ -15,7 +13,7 @@ const FONT_STYLE = {
   fill: 0xffffff,
   fontWeight: "bold" as PIXI.TextStyleFontWeight,
 };
-const VERTICAL_PADDING = 80; // Used for both top and bottom
+const VERTICAL_PADDING = 60; // Used for both top and bottom
 
 export class MagicWords extends BaseScene {
   constructor(app: PIXI.Application) {
@@ -112,7 +110,7 @@ function fetchAndRenderDialogue(
     const dialogueWidth = app.screen.width;
     for (const line of data.dialogue) {
       const dialogueLine = new DialogueLine(line, FONT_STYLE, dialogueWidth);
-      dialogueLine.y = yPos - 80;
+      dialogueLine.y = yPos - 60;
       scrollContainer.addChild(dialogueLine);
       yPos += dialogueLine.height + 20;
     }
@@ -123,7 +121,7 @@ function fetchAndRenderDialogue(
     const contentBottom = lastChild
       ? lastChild.y + (lastChild as any).height
       : 0;
-    const contentHeight = contentBottom + VERTICAL_PADDING * 2; // bottom padding
+    const contentHeight = contentBottom + VERTICAL_PADDING * 3; // bottom padding
     sceneContainer.removeChild(loadingText);
     // Start at the top
     setTimeout(() => {

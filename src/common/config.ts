@@ -1,4 +1,4 @@
-import { ASSETS } from "./consts";
+import { ASSETS } from "./constants";
 
 export const FLAME_EMMITTER_CONFIG = {
   lifetime: {

@@ -1,6 +1,6 @@
 // src/components/avatar.ts
 import * as PIXI from "pixi.js";
-import { AvatarData } from "../models/IMagicWords";
+import { AvatarData } from "../interfaces/IMagicWords";
 
 export class Avatar {
   static avatarMap: Record<string, AvatarData> = {};
