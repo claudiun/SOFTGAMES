@@ -16,4 +16,5 @@ export interface ICard {
   x?: number;
   y?: number;
   zIndex?: number;
+  text?: string;
 }

@@ -2,10 +2,9 @@ import * as PIXI from "pixi.js";
 import { ICard } from "../models/IAceOfShadows";
 import { IAnimateTo } from "../models/IAceOfShadows";
 
-export class Card extends PIXI.Container {
+export class Card extends PIXI.Sprite {
   id: number;
-  private cardBg: PIXI.Graphics;
-  private cardText: PIXI.Text;
+  cardText: PIXI.Text;
 
   constructor({
     id,
@@ -14,40 +13,33 @@ export class Card extends PIXI.Container {
     x = 0,
     y = 0,
     zIndex = 0,
+    text = String(id),
   }: ICard) {
-    super();
+    // Use the card image as the texture
+    const texture = PIXI.Texture.from("assets/card.png");
+    super(texture);
+
     this.id = id;
     this.x = x;
     this.y = y;
     this.zIndex = zIndex;
+    this.width = width;
+    this.height = height;
 
-    this.cardBg = this.createCardBackground(width, height);
-    this.addChild(this.cardBg);
-
-    this.cardText = this.createCardText(id, width, height);
-    this.addChild(this.cardText);
-  }
-
-  private createCardBackground(width: number, height: number): PIXI.Graphics {
-    const cardBg = new PIXI.Graphics();
-    cardBg.beginFill(0xffffff);
-    cardBg.lineStyle(2, 0x000000);
-    cardBg.drawRoundedRect(0, 0, width, height, 10);
-    cardBg.endFill();
-    return cardBg;
-  }
-
-  private createCardText(id: number, width: number, height: number): PIXI.Text {
-    const cardText = new PIXI.Text(String(id), {
+    // Add a dynamic text object on top for the card id
+    const fontSize = Math.floor(width);
+    this.cardText = new PIXI.Text(text, {
       fontFamily: "Arial",
-      fontSize: 24,
+      fontSize,
       fill: 0x000000,
       align: "center",
+      wordWrap: true,
+      wordWrapWidth: width,
     });
-    cardText.anchor.set(0.5);
-    cardText.x = width / 2;
-    cardText.y = height / 2;
-    return cardText;
+    this.cardText.anchor.set(0.5);
+    this.cardText.x = width;
+    this.cardText.y = height;
+    this.addChild(this.cardText);
   }
 
   animateTo({ app, x, y, zIndex, duration = 2, onComplete }: IAnimateTo) {

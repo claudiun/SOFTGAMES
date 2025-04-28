@@ -16,7 +16,7 @@ export function AceOfShadows(app: PIXI.Application): PIXI.Container {
   removePreviousChildren(app);
   const sceneContainer = createSceneContainer(app);
   const { stacks, stackPositions } = setupStacksAndPositions(app);
-  createCards(stacks, stackPositions, sceneContainer);
+  createCards(stacks, stackPositions, sceneContainer, app);
   sceneContainer.sortChildren();
   startAnimationLoop(app, stacks, stackPositions, sceneContainer);
   addBackButton(app, sceneContainer);
@@ -51,7 +51,8 @@ function setupStacksAndPositions(app: PIXI.Application): {
 function createCards(
   stacks: Card[][],
   stackPositions: StackPosition[],
-  sceneContainer: PIXI.Container
+  sceneContainer: PIXI.Container,
+  app: PIXI.Application
 ) {
   for (let i = 0; i < CARD_COUNT; i++) {
     const card = new Card({
