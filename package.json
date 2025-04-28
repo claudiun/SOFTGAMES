@@ -1,0 +1,26 @@
+{
+  "name": "softgames",
+  "version": "1.0.0",
+  "description": "SOFTGAMES TEST",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "esbuild ./src/bootstrap.ts --bundle --outfile=build/bootstrap.js --define:process.env.NODE_ENV=\\\"development\\\"",
+    "build:watch": "esbuild ./src/bootstrap.ts --bundle --outfile=build/bootstrap.js --watch --define:process.env.NODE_ENV=\\\"development\\\"",
+    "build:prod": "esbuild ./src/bootstrap.ts --bundle --minify --outfile=build/bootstrap.js --define:process.env.NODE_ENV=\\\"production\\\"",
+    "serve": "npm-run-all --parallel build:watch serve-only",
+    "serve-only": "npx serve ./build -l 3000"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pixi.js": "^7.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "esbuild": "^0.25.3",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.8.3"
+  }
+}
