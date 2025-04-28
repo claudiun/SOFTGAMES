@@ -5,6 +5,7 @@ import { MagicWordsResponse } from "./interfaces/IMagicWords";
 import { Emoji } from "./components/Emoji";
 import { Avatar } from "./components/Avatar";
 import { fetchMagicWords } from "../common/api";
+import { isValidMagicWordsResponse } from "../common/utils";
 
 const FONT_SIZE = 12;
 const FONT_STYLE = {
@@ -103,7 +104,21 @@ function fetchAndRenderDialogue(
   maskHeight: number,
   onContentReady: (contentHeight: number) => void
 ) {
-  fetchMagicWords((data: MagicWordsResponse) => {
+  fetchMagicWords((data: MagicWordsResponse | any) => {
+    if (!isValidMagicWordsResponse(data)) {
+      const errorText = new PIXI.Text("Failed to get data", {
+        fontFamily: "Arial",
+        fontSize: 24,
+        fill: 0xff4444,
+        fontWeight: "bold",
+      });
+      errorText.anchor.set(0.5);
+      errorText.x = app.screen.width / 2;
+      errorText.y = app.screen.height / 2;
+      sceneContainer.removeChild(loadingText);
+      sceneContainer.addChild(errorText);
+      return;
+    }
     Emoji.setEmojis(data.emojies);
     Avatar.setAvatars(data.avatars);
     let yPos = VERTICAL_PADDING; // top padding
