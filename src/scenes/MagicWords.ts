@@ -142,13 +142,13 @@ function fetchAndRenderDialogue(
   fetchMagicWords((data: MagicWordsResponse) => {
     Emoji.setEmojis(data.emojies);
     Avatar.setAvatars(data.avatars);
-    let y = VERTICAL_PADDING; // top padding
+    let yPos = VERTICAL_PADDING; // top padding
     const dialogueWidth = app.screen.width;
     for (const line of data.dialogue) {
       const dialogueLine = new DialogueLine(line, FONT_STYLE, dialogueWidth);
-      dialogueLine.y = y;
+      dialogueLine.y = yPos - 80;
       scrollContainer.addChild(dialogueLine);
-      y += dialogueLine.height + 20;
+      yPos += dialogueLine.height + 20;
     }
     // Calculate content height (bottom of last child + bottom padding)
     const lastChild = scrollContainer.children[
