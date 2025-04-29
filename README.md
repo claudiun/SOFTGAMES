@@ -13,7 +13,7 @@ This project uses [esbuild](https://esbuild.github.io/) for fast bundling and bu
 - `npm run build:prod`: Bundles and minifies the code for production (debug logs are disabled).
 - `npm run serve`: Runs both the watcher and a local server for development at [http://localhost:3000](http://localhost:3000).
 - `npm run test`: Runs the Jest test suite (with PIXI and Button classes mocked for headless testing).
-- `npx typedoc`: Generates HTML documentation from TypeScript and JSDoc comments into the `docs` folder.
+- `npm run docs`: Generates HTML documentation from TypeScript and JSDoc comments into the `docs` folder.
 
 ### Debug Logging
 
