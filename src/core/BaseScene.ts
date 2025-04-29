@@ -3,9 +3,16 @@ import { EVENTS } from "../common/events";
 import { FullscreenButton } from "../ui/FullscreenButton";
 import { BackButton } from "../ui/BackButton";
 
+/**
+ * Base class for all scenes. Handles adding back and fullscreen buttons.
+ */
 export class BaseScene extends PIXI.Container {
   protected app: PIXI.Application;
 
+  /**
+   * Creates a new BaseScene and adds it to the stage.
+   * @param app The PIXI.Application instance.
+   */
   constructor(app: PIXI.Application) {
     super();
     this.app = app;
@@ -14,6 +21,9 @@ export class BaseScene extends PIXI.Container {
     this.app.stage.addChild(this);
   }
 
+  /**
+   * Adds a back button to the scene.
+   */
   protected addBackButton() {
     const backBtn = new BackButton(() => {
       this.app.stage.removeChildren();
@@ -26,6 +36,9 @@ export class BaseScene extends PIXI.Container {
     this.sortChildren();
   }
 
+  /**
+   * Adds a fullscreen button to the scene.
+   */
   protected addFullscreenButton() {
     const fullscreenBtn = new FullscreenButton(this.app);
     fullscreenBtn.x = this.app.screen.width - fullscreenBtn.width - 10;

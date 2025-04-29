@@ -1,10 +1,17 @@
 import * as PIXI from "pixi.js";
 
+/**
+ * Displays the current FPS as a PIXI.Text object in the canvas.
+ */
 export class FpsCounter extends PIXI.Text {
   private lastTime = performance.now();
   private frames = 0;
   private fps = 0;
 
+  /**
+   * Creates a new FPS counter and adds it to the stage.
+   * @param app The PIXI.Application instance.
+   */
   constructor(app: PIXI.Application) {
     super("0", {
       fontFamily: "monospace",
@@ -23,6 +30,9 @@ export class FpsCounter extends PIXI.Text {
     app.ticker.add(this.update, this);
   }
 
+  /**
+   * Updates the FPS counter every frame.
+   */
   private update() {
     this.frames++;
     const now = performance.now();
@@ -41,6 +51,10 @@ export class FpsCounter extends PIXI.Text {
     }
   }
 
+  /**
+   * Removes the FPS counter from the stage and destroys the text object.
+   * @param options Optional destroy options.
+   */
   destroy(options?: boolean | PIXI.IDestroyOptions) {
     this.parent?.removeChild(this);
     super.destroy(options);

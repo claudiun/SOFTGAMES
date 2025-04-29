@@ -6,7 +6,17 @@ import { measureSpaceWidth } from "../../common/utils";
 
 const PADDING = 16;
 
+/**
+ * A container for rendering a dialogue line with an avatar and inline emojis.
+ * Extends PIXI.Container for flexible layout.
+ */
 export class DialogueLine extends PIXI.Container {
+  /**
+   * Creates a new DialogueLine instance.
+   * @param data Dialogue line data.
+   * @param textStyle Text style for the dialogue.
+   * @param parentWidth Width of the parent container for layout.
+   */
   constructor(
     data: DialogueLineData,
     textStyle: Partial<PIXI.ITextStyle>,
@@ -55,6 +65,15 @@ export class DialogueLine extends PIXI.Container {
     }
   }
 
+  /**
+   * Creates a PIXI.Container with text and inline emojis, replacing placeholders with emoji sprites.
+   * @param text The dialogue text, with emoji placeholders in curly braces.
+   * @param textStyle The PIXI text style to use.
+   * @param maxWidth Maximum width for word wrapping.
+   * @param x X position for the text container.
+   * @param y Y position for the text container.
+   * @returns A PIXI.Container with the rendered text and emojis.
+   */
   private createTextWithEmojis(
     text: string,
     textStyle: Partial<PIXI.ITextStyle>,

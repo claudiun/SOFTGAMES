@@ -3,10 +3,18 @@ import { ICard } from "../interfaces/IAceOfShadows";
 import { IAnimateTo } from "../interfaces/IAceOfShadows";
 import { ASSETS } from "../../common/constants";
 
+/**
+ * Represents a playing card with text and animation capabilities.
+ * Extends PIXI.Sprite for rendering in a PIXI application.
+ */
 export class Card extends PIXI.Sprite {
   id: number;
   cardText: PIXI.Text;
 
+  /**
+   * Creates a new Card instance.
+   * @param param0 Card configuration object.
+   */
   constructor({
     id,
     width = 60,
@@ -43,6 +51,10 @@ export class Card extends PIXI.Sprite {
     this.addChild(this.cardText);
   }
 
+  /**
+   * Animates the card to a new position and zIndex over a duration.
+   * @param param0 Animation configuration object.
+   */
   animateTo({ app, x, y, zIndex, duration = 2, onComplete }: IAnimateTo) {
     let elapsed = 0;
     const startX = this.x;

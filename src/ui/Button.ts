@@ -1,7 +1,14 @@
 import * as PIXI from "pixi.js";
 import { IButton } from "./interfaces/IButton";
 
+/**
+ * A customizable button component for PixiJS.
+ */
 export class Button extends PIXI.Container {
+  /**
+   * Creates a new Button.
+   * @param options Button options (label, size, colors, onClick, etc.)
+   */
   constructor({
     label,
     width = 150,

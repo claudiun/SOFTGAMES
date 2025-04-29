@@ -17,6 +17,9 @@ let currentScene: PIXI.DisplayObject | null = null;
 let menu: Menu;
 const fpsCounter = new FpsCounter(app);
 
+/**
+ * Removes the current scene and menu from the stage, and re-adds the FPS counter.
+ */
 function clearScene() {
   if (currentScene) {
     app.stage.removeChild(currentScene);
@@ -27,6 +30,9 @@ function clearScene() {
   app.stage.addChild(fpsCounter);
 }
 
+/**
+ * Shows the main menu and handles scene switching based on user selection.
+ */
 function showMenu() {
   menu = new Menu(app, (task: string) => {
     if (menu) {

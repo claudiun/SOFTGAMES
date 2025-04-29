@@ -2,13 +2,29 @@
 import * as PIXI from "pixi.js";
 import { AvatarData } from "../interfaces/IMagicWords";
 
+/**
+ * Utility class for managing and rendering avatars.
+ */
 export class Avatar {
+  /**
+   * Map of avatar names to their data.
+   */
   static avatarMap: Record<string, AvatarData> = {};
 
+  /**
+   * Sets the available avatars.
+   * @param avatars Array of AvatarData.
+   */
   static setAvatars(avatars: AvatarData[]) {
     Avatar.avatarMap = Object.fromEntries(avatars.map((a) => [a.name, a]));
   }
 
+  /**
+   * Creates a PIXI.Sprite for the avatar image.
+   * @param name The avatar's name.
+   * @param size The size of the avatar image.
+   * @returns The PIXI.Sprite or null if not found.
+   */
   static addImage(name: string, size: number = 56): PIXI.Sprite | null {
     const avatar = Avatar.avatarMap[name];
     if (!avatar) return null;
@@ -18,6 +34,12 @@ export class Avatar {
     return sprite;
   }
 
+  /**
+   * Creates a PIXI.Text for the avatar name.
+   * @param name The avatar's name.
+   * @param size The size for the text.
+   * @returns The PIXI.Text or null if not found.
+   */
   static addName(name: string, size: number = 56): PIXI.Text | null {
     const avatar = Avatar.avatarMap[name];
     if (!avatar) return null;
@@ -30,6 +52,12 @@ export class Avatar {
     return nameText;
   }
 
+  /**
+   * Creates a container with the avatar image and name.
+   * @param name The avatar's name.
+   * @param size The size for the avatar.
+   * @returns The PIXI.Container or null if not found.
+   */
   static create(name: string, size: number = 56): PIXI.Container | null {
     const avatar = Avatar.avatarMap[name];
     if (!avatar) return null;
@@ -45,6 +73,11 @@ export class Avatar {
     return container;
   }
 
+  /**
+   * Gets the position ('left' or 'right') for the avatar.
+   * @param name The avatar's name.
+   * @returns 'left' or 'right'.
+   */
   static getPosition(name: string): "left" | "right" {
     return Avatar.avatarMap[name]?.position || "left";
   }

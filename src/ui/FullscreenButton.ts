@@ -1,8 +1,15 @@
 import * as PIXI from "pixi.js";
 
+/**
+ * A button that toggles fullscreen mode when clicked.
+ */
 export class FullscreenButton extends PIXI.Container {
   private icon: PIXI.Graphics;
 
+  /**
+   * Creates a new FullscreenButton.
+   * @param app The PIXI.Application instance.
+   */
   constructor(app: PIXI.Application) {
     super();
     this.icon = this.createIcon();
@@ -38,6 +45,10 @@ export class FullscreenButton extends PIXI.Container {
     });
   }
 
+  /**
+   * Creates the fullscreen icon graphics.
+   * @returns The PIXI.Graphics object for the icon.
+   */
   private createIcon(): PIXI.Graphics {
     const g = new PIXI.Graphics();
     g.lineStyle(3, 0xffffff, 1);

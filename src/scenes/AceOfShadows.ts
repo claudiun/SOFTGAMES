@@ -10,7 +10,14 @@ const STACK_GAP = 180;
 
 type StackPosition = { x: number; y: number };
 
+/**
+ * AceOfShadows scene: handles card stack animation and user interaction.
+ */
 export class AceOfShadows extends BaseScene {
+  /**
+   * Creates a new AceOfShadows scene.
+   * @param app The PIXI.Application instance.
+   */
   protected app: PIXI.Application;
 
   constructor(app: PIXI.Application) {
@@ -23,6 +30,11 @@ export class AceOfShadows extends BaseScene {
   }
 }
 
+/**
+ * Sets up the stacks and their positions for the card game.
+ * @param app The PIXI.Application instance.
+ * @returns An object with stacks and stackPositions.
+ */
 function setupStacksAndPositions(app: PIXI.Application): {
   stacks: Card[][];
   stackPositions: StackPosition[];
@@ -37,6 +49,13 @@ function setupStacksAndPositions(app: PIXI.Application): {
   return { stacks, stackPositions };
 }
 
+/**
+ * Creates and adds cards to the scene.
+ * @param stacks The card stacks.
+ * @param stackPositions The positions of the stacks.
+ * @param sceneContainer The container to add cards to.
+ * @param app The PIXI.Application instance.
+ */
 function createCards(
   stacks: Card[][],
   stackPositions: StackPosition[],
@@ -57,6 +76,10 @@ function createCards(
   }
 }
 
+/**
+ * Updates the z-index of all cards in both stacks.
+ * @param stacks The card stacks.
+ */
 function updateAllZIndexes(stacks: Card[][]) {
   // Left stack: zIndex 0 ... stacks[1].length-1
   for (let i = 0; i < stacks[1].length; i++) {
@@ -69,6 +92,13 @@ function updateAllZIndexes(stacks: Card[][]) {
   }
 }
 
+/**
+ * Starts the animation loop for moving cards between stacks.
+ * @param app The PIXI.Application instance.
+ * @param stacks The card stacks.
+ * @param stackPositions The positions of the stacks.
+ * @param sceneContainer The container for the cards.
+ */
 function startAnimationLoop(
   app: PIXI.Application,
   stacks: Card[][],

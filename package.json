@@ -10,7 +10,8 @@
     "build:prod": "esbuild ./src/bootstrap.ts --bundle --minify --outfile=build/bootstrap.js --define:process.env.NODE_ENV=\\\"production\\\" && npm run copy-css",
     "serve": "npm-run-all --parallel build:watch serve-only",
     "serve-only": "npx serve ./build -l 3000",
-    "copy-css": "npx cpx src/styles.css build/"
+    "copy-css": "npx cpx src/styles.css build/",
+    "docs": "npx typedoc"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +24,7 @@
     "@types/node": "^22.15.3",
     "esbuild": "^0.25.3",
     "npm-run-all": "^4.1.5",
+    "typedoc": "^0.28.3",
     "typescript": "^5.8.3"
   }
 }

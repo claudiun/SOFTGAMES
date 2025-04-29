@@ -16,7 +16,15 @@ const FONT_STYLE = {
 };
 const VERTICAL_PADDING = 60; // Used for both top and bottom
 
+/**
+ * MagicWords scene: displays a scrollable dialogue with avatars and emojis.
+ * Fetches data from the API and renders it in a PixiJS container.
+ */
 export class MagicWords extends BaseScene {
+  /**
+   * Constructs the MagicWords scene, sets up loading, scrolling, and fetches dialogue data.
+   * @param app The PIXI.Application instance
+   */
   constructor(app: PIXI.Application) {
     super(app);
     const loadingText = showLoading(this, app);
@@ -39,6 +47,12 @@ export class MagicWords extends BaseScene {
   }
 }
 
+/**
+ * Shows a loading text in the center of the scene.
+ * @param sceneContainer The container to add the loading text to
+ * @param app The PIXI.Application instance
+ * @returns The PIXI.Text object for loading
+ */
 function showLoading(sceneContainer: PIXI.Container, app: PIXI.Application) {
   const loadingText = new PIXI.Text("Loading...", {
     fontFamily: "Arial",
@@ -53,6 +67,12 @@ function showLoading(sceneContainer: PIXI.Container, app: PIXI.Application) {
   return loadingText;
 }
 
+/**
+ * Creates a scrollable container with a mask for dialogue lines.
+ * @param sceneContainer The parent container
+ * @param app The PIXI.Application instance
+ * @returns An object with scrollContainer, maskY, and maskHeight
+ */
 function createScrollContainer(
   sceneContainer: PIXI.Container,
   app: PIXI.Application
@@ -70,6 +90,14 @@ function createScrollContainer(
   return { scrollContainer, maskY, maskHeight };
 }
 
+/**
+ * Sets up mouse wheel scrolling for the dialogue container.
+ * @param app The PIXI.Application instance
+ * @param scrollContainer The container to scroll
+ * @param maskY The top Y of the mask
+ * @param maskHeight The height of the mask
+ * @param contentHeight The total content height
+ */
 function setupScrolling(
   app: PIXI.Application,
   scrollContainer: PIXI.Container,
@@ -95,6 +123,16 @@ function clampScroll(
   if (scrollContainer.y < minY) scrollContainer.y = minY;
 }
 
+/**
+ * Fetches dialogue data and renders it in the scroll container. Handles error display.
+ * @param app The PIXI.Application instance
+ * @param sceneContainer The parent container
+ * @param scrollContainer The container for dialogue lines
+ * @param loadingText The loading text to remove
+ * @param maskY The top Y of the mask
+ * @param maskHeight The height of the mask
+ * @param onContentReady Callback when content is ready
+ */
 function fetchAndRenderDialogue(
   app: PIXI.Application,
   sceneContainer: PIXI.Container,

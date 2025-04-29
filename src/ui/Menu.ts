@@ -1,7 +1,15 @@
 import * as PIXI from "pixi.js";
 import { Button } from "./Button";
 
+/**
+ * The main menu scene, displaying buttons for each available scene.
+ */
 export class Menu extends PIXI.Container {
+  /**
+   * Creates a new Menu.
+   * @param app The PIXI.Application instance.
+   * @param onSelect Callback when a menu item is selected.
+   */
   constructor(app: PIXI.Application, onSelect: (task: string) => void) {
     super();
     const scenes = [
